@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+    html,body{
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100vh;
+        background: #f2f1e7;
+    }
+    svg {
+        width: 100%;
+        height: 100vh;
+    }
+</style>
+</head>
+<body>
+    <svg viewBox="-250 0 500 100" stroke-linecap="round"></svg>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+<script>
+    const colors  =['#1d392f','#ef8764','#9dc1c3','#4a7a7d','#463d97','#a597e5'];
+const stage  =document.querySelector('svg');
+let xPos=0;
+for(let i=0;i<55;i++){
+    const p =document.createElement('http://www.w3.org/2000/svg', 'path');
+    const width =gsap.utils.random(6,24,1);
+    gsap.set(p,{
+        x:xPos+width/2,
+        y:5-,
+        attr:{
+            d:'M0,0'
+        }
+
+    })
+}
+</script>
+
+</body>
+</html>

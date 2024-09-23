@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic SVG Animation</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            background: #f2f1e7; /* Light background color */
+        }
+
+        svg {
+            width: 100%;
+            height: 100vh; /* SVG takes full height of the viewport */
+        }
+    </style>
+</head>
+<body>
+    <svg viewBox="-250 0 500 100" stroke-linecap="round"></svg>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script>
+        const colors = ['#1d392f','#ef8764','#9dc1c3','#4a7a7d','#463d97','#a597e5']; // Array of colors
+        const stage = document.querySelector('svg'); // Selects the SVG element
+        let xPos = 0; // Starting x position for the paths
+
+        for (let i = 0; i < 55; i++) {
+            const p = document.createElementNS('http://www.w3.org/2000/svg', 'path'); // Creates a new path element
+            const width = gsap.utils.random(6, 24, 1); // Random width for the path
+            gsap.set(p, {
+                x: xPos + width / 2, // Position the path
+                y: 50, // Y position
+                attr: {
+                    d: 'M0,0 0,0', // Initial path data (invisible)
+                    stroke: colors[gsap.utils.random(0, 5, 1)], // Random stroke color
+                    "stroke-width": width // Set stroke width
+                }
+            });
+            stage.append(p); // Append the path to the SVG
+            xPos += width + 1.5; // Update xPos for the next path
+        }
+
+        const tl = gsap.timeline({ repeat: -1, repeatRefresh: true }); // Create a GSAP timeline
+        tl.to(stage, {
+            attr: { viewBox: () => 'random(400,600,1)' + ' 0 500 100' }, // Randomize viewBox width
+            ease: 'power2.inOut',
+            yoyo: true,
+            repeat: 1,
+            repeatDelay: 0.5,
+            duration: 1.5 
+        }, 0)
+        .to('path', {
+            ease: 'back.out(4)', 
+            yoyoEase: 'power3.in', // Easing function for yoyo effect
+            stagger: { amount: 1.75, yoyo: true, repeat: 1, repeatDelay: 0.15 }, // Stagger the animation
+            attr: {
+                d: () => {
+                    const n = gsap.utils.random(1, 50, 1); // Random height for the path
+                    return 'M0,-' + n + ' 0,' + n; // Define the new path data
+                }
+            }
+        }, 0);
+    </script>
+</body>
+</html>
