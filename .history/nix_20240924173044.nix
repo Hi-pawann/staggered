@@ -1,0 +1,2 @@
+{okgs ?import <nixpkgs>{}}
+
